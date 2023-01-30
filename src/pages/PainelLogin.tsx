@@ -15,6 +15,7 @@ export default function PainelLogin() {
     const context = localStorage.getItem("id")
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [espera, setEspera] = useState(false)
     const [validateErro, setValidateErro]: any = useState(false);
     const [
         signInWithEmailAndPassword,
@@ -23,9 +24,10 @@ export default function PainelLogin() {
         error,
     ] = useSignInWithEmailAndPassword(auth)
     async function AuthLogin() {
+        setEspera(true)
         const googleath = await signInWithEmailAndPassword(email, password)
         if (googleath?.user) {
-            const url = `https://bloghabbo.onrender.com/user/google/${googleath.user.uid}`
+            const url = `http://localhost:3333/user/google/${googleath.user.uid}`
             const axiosAth = await axios.get(url)
             console.log(axiosAth)
             if (axiosAth.data.equipe === true) {
@@ -33,6 +35,7 @@ export default function PainelLogin() {
                 location.reload()
             } else {
                 setValidateErro(true)
+                setEspera(false)
             }
         }
     }
@@ -49,7 +52,7 @@ export default function PainelLogin() {
                 <Input type={'password'} variant="outlined" label="Senha" color='blue'
                     onChange={(e) => setPassword(e.target.value)}
                 />
-                {loading === true ? <Button className='flex justify-center items-center gap-3'><img className='w-6 text-center' src={loadingimg} alt="loading" /> carregando</Button> : <Button onClick={AuthLogin}>Fazer Login</Button>}
+                {espera === true ? <Button className='flex justify-center items-center gap-3'><img className='w-6 text-center' src={loadingimg} alt="loading" /> carregando</Button> : <Button onClick={AuthLogin}>Fazer Login</Button>}
                 {error?.message ? <Alert color="red">Email ou senha invalida. Esqueceu sua senha? <Link to={'/redefinir-email'}>clique aqui</Link></Alert> : null}
                 {validateErro === true ? <Alert color="red">Você não é membro da nossa equipe.</Alert> : null}
             </form>

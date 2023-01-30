@@ -9,7 +9,7 @@ import axios from 'axios';
 export default function Register() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [nick, setNick] = useState('Morgana ')
+    const [nick, setNick] = useState('Morgana')
     const [resposta, setResposta] = useState()
     const [erroNick, setErroNick] = useState(false)
     const [tangle, setTangle] = useState(false)
@@ -30,7 +30,7 @@ export default function Register() {
         if (nick.length < 3 || nick === 'Morgana') {
             setErroNick(true)
         } else {
-            const userverify = await axios.get(`https://bloghabbo.onrender.com/user/${nick}`)
+            const userverify = await axios.get(`http://localhost:3333/user/${nick}`)
             console.log(userverify)
             if (userverify.data === null) {
                 try {
@@ -44,7 +44,7 @@ export default function Register() {
                             "email": googleResponse.user.email,
                             "googleid": googleResponse.user.uid
                         }
-                        const axiosResponse = await axios.post('https://bloghabbo.onrender.com/user', dados)
+                        const axiosResponse = await axios.post('http://localhost:3333/user', dados)
                     }
                 } catch (error) {
                     console.log(error)
