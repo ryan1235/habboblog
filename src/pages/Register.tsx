@@ -30,7 +30,7 @@ export default function Register() {
         if (nick.length < 3 || nick === 'Morgana') {
             setErroNick(true)
         } else {
-            const userverify = await axios.get(`http://localhost:3333/user/${nick}`)
+            const userverify = await axios.get(`http://ca-amd-b1.phosting.com.br:10174/user/${nick}`)
             console.log(userverify)
             if (userverify.data === null) {
                 try {
@@ -44,7 +44,7 @@ export default function Register() {
                             "email": googleResponse.user.email,
                             "googleid": googleResponse.user.uid
                         }
-                        const axiosResponse = await axios.post('http://localhost:3333/user', dados)
+                        const axiosResponse = await axios.post('http://ca-amd-b1.phosting.com.br:10174/user', dados)
                     }
                 } catch (error) {
                     console.log(error)

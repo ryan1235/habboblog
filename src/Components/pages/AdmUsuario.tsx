@@ -34,7 +34,7 @@ export default function AdmUsuario({ cargo }: any) {
         if (nick.length < 3) {
             setNickError('Nick invalido!')
         } else {
-            const userapi: any = await axios.get(`http://localhost:3333/user/${nick}`)
+            const userapi: any = await axios.get(`http://ca-amd-b1.phosting.com.br:10174/user/${nick}`)
             setUser(userapi.data)
             setUserTangle(true)
 
@@ -48,7 +48,7 @@ export default function AdmUsuario({ cargo }: any) {
                 })
                 setData(timePeriod)
 
-                const cargoapi = await axios.get(`http://localhost:3333/cargo/${userapi.data.googleid}`)
+                const cargoapi = await axios.get(`http://ca-amd-b1.phosting.com.br:10174/cargo/${userapi.data.googleid}`)
 
 
                 setCoordenador_jornalismo(cargoapi.data.coordenador_jornalismo)
@@ -67,9 +67,9 @@ export default function AdmUsuario({ cargo }: any) {
             "nick": user.nick,
             "googleid": user.googleid
         }
-        const criarCargo = await axios.post('http://localhost:3333/cargo', dados)
+        const criarCargo = await axios.post('http://ca-amd-b1.phosting.com.br:10174/cargo', dados)
         handleOpencargo()
-        const userCargo = await axios.put('http://localhost:3333/user/cargo/true', {
+        const userCargo = await axios.put('http://ca-amd-b1.phosting.com.br:10174/user/cargo/true', {
             nick: user.nick
         })
         buscar()
@@ -77,7 +77,7 @@ export default function AdmUsuario({ cargo }: any) {
 
 
     async function editcargo() {
-        const editarcargo = axios.put('http://localhost:3333/cargo/edit/', {
+        const editarcargo = axios.put('http://ca-amd-b1.phosting.com.br:10174/cargo/edit/', {
             nick: nick,
             ceo: ceo,
             diretor: diretor,
@@ -92,10 +92,10 @@ export default function AdmUsuario({ cargo }: any) {
 
 
     async function removecargo() {
-        const removeuser = await axios.put('http://localhost:3333/user/cargo/false', {
+        const removeuser = await axios.put('http://ca-amd-b1.phosting.com.br:10174/user/cargo/false', {
             nick: user.nick
         })
-        const removecargo = await axios.put(`http://localhost:3333/cargo/remove`, {
+        const removecargo = await axios.put(`http://ca-amd-b1.phosting.com.br:10174/cargo/remove`, {
             nick: user.nick
         })
         handleOpencargo()

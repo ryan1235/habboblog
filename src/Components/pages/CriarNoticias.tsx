@@ -44,7 +44,7 @@ export default function CriarNoticias({ cargo }: any) {
             "banner": link,
             "nick": cargo.nick
         }
-        const createNoticia = await axios.post('http://localhost:3333/noticia', dados)
+        const createNoticia = await axios.post('http://ca-amd-b1.phosting.com.br:10174/noticia', dados)
         setTangle(!tangle)
         setsucess('A noticia foi enviada com sucesso!')
         setContent('Noticia enviada!')

@@ -27,7 +27,7 @@ export default function PainelLogin() {
         setEspera(true)
         const googleath = await signInWithEmailAndPassword(email, password)
         if (googleath?.user) {
-            const url = `http://localhost:3333/user/google/${googleath.user.uid}`
+            const url = `http://ca-amd-b1.phosting.com.br:10174/user/google/${googleath.user.uid}`
             const axiosAth = await axios.get(url)
             console.log(axiosAth)
             if (axiosAth.data.equipe === true) {
