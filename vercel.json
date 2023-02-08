@@ -1,6 +1,3 @@
 {
-  "rewrites": [{ "source": "/(.*)", "destination": "/" }],
-  "build": {
-    "chunkSizeWarningLimit": 300000
-  }
+  "rewrites": [{ "source": "/(.*)", "destination": "/" }]
 }
