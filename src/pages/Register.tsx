@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useCreateUserWithEmailAndPassword } from 'react-firebase-hooks/auth';
 import { auth } from '../services/FirebaseConfig';
 import loadingimg from '../assets/Loading.svg'
@@ -13,15 +13,24 @@ export default function Register() {
     const [resposta, setResposta] = useState()
     const [erroNick, setErroNick] = useState(false)
     const [tangle, setTangle] = useState(false)
+    const [habboerror, setHabboerro] = useState('')
+    const [verificação, setVerificação]: any = useState()
     const [
         createUserWithEmailAndPassword,
         user,
         loading,
         error,
     ] = useCreateUserWithEmailAndPassword(auth);
+
+    useEffect(() => {
+        const numero = Math.floor(Math.random() * 900) + 100;
+        setVerificação(`habbo${numero}`)
+    }, [])
+
     async function Register() {
         setErroNick(false)
         setTangle(false)
+        setHabboerro('')
         interface userInterfece {
             nick: String
             email: string
@@ -30,27 +39,31 @@ export default function Register() {
         if (nick.length < 3 || nick === 'Morgana') {
             setErroNick(true)
         } else {
-            const userverify = await axios.get(`http://ca-amd-b1.phosting.com.br:10174/user/${nick}`)
-            console.log(userverify)
-            if (userverify.data === null) {
-                try {
-                    const googleResponse: any = await createUserWithEmailAndPassword(email, password)
-                    setResposta(googleResponse)
-                    setTangle(true)
-                    console.log(googleResponse)
-                    if (googleResponse.user || !error) {
-                        const dados: userInterfece = {
-                            "nick": nick,
-                            "email": googleResponse.user.email,
-                            "googleid": googleResponse.user.uid
+            const habbomissao: any = await axios.get(`https://www.habbo.com.br/api/public/users?name=${nick}`)
+            if (habbomissao.data.motto === verificação) {
+                const userverify = await axios.get(`https://landhabbo.vps-kinghost.net:3443/user/${nick}`)
+                if (userverify.data === null) {
+                    try {
+                        const googleResponse: any = await createUserWithEmailAndPassword(email, password)
+                        setResposta(googleResponse)
+                        setTangle(true)
+                        console.log(googleResponse)
+                        if (googleResponse.user || !error) {
+                            const dados: userInterfece = {
+                                "nick": nick,
+                                "email": googleResponse.user.email,
+                                "googleid": googleResponse.user.uid
+                            }
+                            const axiosResponse = await axios.post('https://landhabbo.vps-kinghost.net:3443/user', dados)
                         }
-                        const axiosResponse = await axios.post('http://ca-amd-b1.phosting.com.br:10174/user', dados)
+                    } catch (error) {
+                        console.log(error)
                     }
-                } catch (error) {
-                    console.log(error)
+                } else {
+                    setErroNick(true)
                 }
             } else {
-                setErroNick(true)
+                setHabboerro(`Por favor coloque o codigo abaixo em sua missão no habbo para verificar se essa conta é realmente sua.`)
             }
         }
     }
@@ -74,6 +87,8 @@ export default function Register() {
                 {error ? <Alert color="red">Email ou Senha invalidos</Alert> : null}
                 {tangle === true ? resposta ? <Alert color='green'>Conta Criada!</Alert> : <Alert color='red'>Conta Não Criada!</Alert> : null}
                 {erroNick === true ? <Alert color='red'>Nick invalido</Alert> : null}
+                {habboerror === '' ? null : <Alert color="red">{habboerror}</Alert>}
+                <Alert color='deep-orange' >Coloque <strong className='text-black'>{verificação}</strong> em sua missão habbo para verificar sua conta</Alert>
             </div>
         </main>
     )

@@ -34,7 +34,7 @@ export default function AdmUsuario({ cargo }: any) {
         if (nick.length < 3) {
             setNickError('Nick invalido!')
         } else {
-            const userapi: any = await axios.get(`http://ca-amd-b1.phosting.com.br:10174/user/${nick}`)
+            const userapi: any = await axios.get(`https://landhabbo.vps-kinghost.net:3443/user/${nick}`)
             setUser(userapi.data)
             setUserTangle(true)
 
@@ -48,7 +48,7 @@ export default function AdmUsuario({ cargo }: any) {
                 })
                 setData(timePeriod)
 
-                const cargoapi = await axios.get(`http://ca-amd-b1.phosting.com.br:10174/cargo/${userapi.data.googleid}`)
+                const cargoapi = await axios.get(`https://landhabbo.vps-kinghost.net:3443/cargo/${userapi.data.googleid}`)
 
 
                 setCoordenador_jornalismo(cargoapi.data.coordenador_jornalismo)
@@ -67,9 +67,9 @@ export default function AdmUsuario({ cargo }: any) {
             "nick": user.nick,
             "googleid": user.googleid
         }
-        const criarCargo = await axios.post('http://ca-amd-b1.phosting.com.br:10174/cargo', dados)
+        const criarCargo = await axios.post('https://landhabbo.vps-kinghost.net:3443/cargo', dados)
         handleOpencargo()
-        const userCargo = await axios.put('http://ca-amd-b1.phosting.com.br:10174/user/cargo/true', {
+        const userCargo = await axios.put('https://landhabbo.vps-kinghost.net:3443/user/cargo/true', {
             nick: user.nick
         })
         buscar()
@@ -77,7 +77,7 @@ export default function AdmUsuario({ cargo }: any) {
 
 
     async function editcargo() {
-        const editarcargo = axios.put('http://ca-amd-b1.phosting.com.br:10174/cargo/edit/', {
+        const editarcargo = axios.put('https://landhabbo.vps-kinghost.net:3443/cargo/edit/', {
             nick: nick,
             ceo: ceo,
             diretor: diretor,
@@ -92,10 +92,10 @@ export default function AdmUsuario({ cargo }: any) {
 
 
     async function removecargo() {
-        const removeuser = await axios.put('http://ca-amd-b1.phosting.com.br:10174/user/cargo/false', {
+        const removeuser = await axios.put('https://landhabbo.vps-kinghost.net:3443/user/cargo/false', {
             nick: user.nick
         })
-        const removecargo = await axios.put(`http://ca-amd-b1.phosting.com.br:10174/cargo/remove`, {
+        const removecargo = await axios.put(`https://landhabbo.vps-kinghost.net:3443/cargo/remove`, {
             nick: user.nick
         })
         handleOpencargo()
@@ -160,7 +160,7 @@ export default function AdmUsuario({ cargo }: any) {
 
                 {opencargo === true ?
                     <div className="fixed top-0 left-0 w-screen h-screen bg-black/60 flex items-center justify-center">
-                        <div className="relative w-[50%] min-h-[80%] overflow-scroll rounded-md shadow-md bg-white flex flex-col items-center ">
+                        <div className="relative w-[50%] h-[90%] overflow-scroll rounded-md shadow-md bg-white flex flex-col items-center ">
                             <span className="text-2xl p-4 flex items-center gap-1"> <img className="w-12" src={`https://www.habbo.com.br/habbo-imaging/avatarimage?img_format=png&user=${nick}&direction=4&head_direction=3&size=l&headonly=1`} alt={`imagem do jogar ${nick}`} /> Editando cargo de <strong className="text-blue-500">{nick}</strong>  </span>
                             <Button onClick={removecargo} className="w-3/6" variant="gradient" color="red"><div className="flex gap-2 items-center justify-center"><Trash size={24} />Remover da equipe</div></Button>
                             {cargo.ceo === true || cargo.webmaster === true || cargo.diretor === true ?
@@ -202,7 +202,7 @@ export default function AdmUsuario({ cargo }: any) {
                                     </div>
                                 </div>
                                 : null}
-                            <div className="absolute bottom-0 mt-4 flex items-end justify-end w-full">
+                            <div className="flex items-end justify-end w-full">
                                 <Button
                                     variant="text"
                                     color="red"

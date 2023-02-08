@@ -12,18 +12,17 @@ export default function Painel() {
     const [cargo, setCargo]: any = useState()
     useEffect(() => {
         async function ValideteLogin() {
-            const validete: any = await axios.get(`http://ca-amd-b1.phosting.com.br:10174/user/google/${context}`)
+            const validete: any = await axios.get(`https://landhabbo.vps-kinghost.net:3443/user/google/${context}`)
             setUser(validete)
             if (validete.data === null || validete.data.equipe === false) {
                 localStorage.removeItem('id')
                 location.reload()
             }
-            const user = await axios.get(`http://ca-amd-b1.phosting.com.br:10174/cargo/${context}`)
+            const user = await axios.get(`https://landhabbo.vps-kinghost.net:3443/cargo/${context}`)
             setCargo(user.data)
         }
         ValideteLogin()
     }, [])
-    console.log(context)
     if (!user) {
         return <Loading />
     }

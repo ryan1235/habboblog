@@ -1,4 +1,4 @@
-import { Input, Select, Option, Button, Alert } from '@material-tailwind/react'
+import { Input, Select, Option, Button, Alert, Typography } from '@material-tailwind/react'
 import { Navigate } from 'react-router-dom'
 import Loading from '../Loading'
 
@@ -44,7 +44,7 @@ export default function CriarNoticias({ cargo }: any) {
             "banner": link,
             "nick": cargo.nick
         }
-        const createNoticia = await axios.post('http://ca-amd-b1.phosting.com.br:10174/noticia', dados)
+        const createNoticia = await axios.post('https://landhabbo.vps-kinghost.net:3443/noticia', dados)
         setTangle(!tangle)
         setsucess('A noticia foi enviada com sucesso!')
         setContent('Noticia enviada!')
@@ -55,9 +55,9 @@ export default function CriarNoticias({ cargo }: any) {
     } else if (cargo.ceo === true || cargo.webmaster === true || cargo.diretor === true || cargo.adm_jornalista === true || cargo.supervisor_jornalismo === true || cargo.coordenador_jornalismo === true || cargo.jornalista) {
         return (
             <div className='flex flex-col items-center justify-center' >
-                <h1 className='mt-8 text-blue-500 text-2xl'>Criar Noticias</h1>
-                <div className='flex flex-col items-center justify-center mt-10 gap-4'>
-                    <div className='flex w=full gap-2'>
+                <Typography variant="h1"><div className="text-blue-500 text-center my-8">Criar Noticias</div></Typography>
+                <div className='flex flex-col items-center justify-center flex-5/6 mt-10 gap-4'>
+                    <div className='flex w-full gap-2'>
                         <Input onChange={(e) => settitle(e.target.value)} variant="standard" label="Titulo da noticia" className='w-full' />
                         <Select onChange={(e) => setSelected(e)} variant="static" label="Tipo da noticia">
                             <Option value='Noticias Habo'>Noticias Habo</Option>

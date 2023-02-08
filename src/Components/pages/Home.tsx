@@ -5,7 +5,7 @@ export default function home({ user }: any) {
     const [destaques, setDestaques]: any = useState()
     useEffect(() => {
         async function api() {
-            const destaque: any = await axios.get('http://ca-amd-b1.phosting.com.br:10174/destaque/get')
+            const destaque: any = await axios.get('https://landhabbo.vps-kinghost.net:3443/destaque/get')
             setDestaques(destaque)
         }
         api()

@@ -18,14 +18,15 @@ export default function TodasNoticias({ cargo }) {
     const { id } = useParams()
     useEffect(() => {
         async function allnoticias() {
-            const getnoticias = await axios.get("http://ca-amd-b1.phosting.com.br:10174/noticias")
+            const getnoticias = await axios.get("https://landhabbo.vps-kinghost.net:3443/noticias")
             setNoticias(getnoticias.data)
         }
         allnoticias()
     }, [])
     async function excluirnoticia() {
-        const excluirnoticiaapi = await axios.put(`http://ca-amd-b1.phosting.com.br:10174/noticia/excluir/${id}`)
-        window.location.reload()
+        const excluirnoticiaapi = await axios.put(`https://landhabbo.vps-kinghost.net:3443/noticia/excluir/${id}`)
+        const getnoticias = await axios.get("https://landhabbo.vps-kinghost.net:3443/noticias")
+        setNoticias(getnoticias.data)
     }
     if (noticias === '' || !cargo) {
         return <Loading />

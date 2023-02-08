@@ -6,7 +6,7 @@ import { Navigate, useParams } from 'react-router-dom'
 import Loading from '../Loading'
 
 export default function ModerarNoticias({ cargo }) {
-    const { slug } = useParams()
+    const { slugs }: any = useParams()
     const [noticia, setNoticia]: any = useState('')
     const [togle, setTogle] = useState(false)
     const [titulo, settitulo]: any = useState(null)
@@ -22,7 +22,10 @@ export default function ModerarNoticias({ cargo }) {
 
     useEffect(() => {
         async function noticia() {
-            const buscanoticia: any = await axios.get(`http://ca-amd-b1.phosting.com.br:10174/noticia/${slug}`)
+            const dados: any = {
+                slug: slugs
+            }
+            const buscanoticia = await axios.get(`https://landhabbo.vps-kinghost.net:3443/noticia/`, dados)
             setNoticia(buscanoticia.data)
             settitulo(buscanoticia.data.titulo)
             setLink(buscanoticia.data.banner)
@@ -32,7 +35,7 @@ export default function ModerarNoticias({ cargo }) {
     }, [])
 
     async function editar() {
-        const editNoticia = await axios.put('http://ca-amd-b1.phosting.com.br:10174/noticia/edit', {
+        const editNoticia = await axios.put('https://landhabbo.vps-kinghost.net:3443/noticia/edit', {
             id: noticia.id,
             titulo: titulo,
             tipo: option,
@@ -42,13 +45,11 @@ export default function ModerarNoticias({ cargo }) {
         window.location.reload()
     }
     async function postar() {
-        const postarNoticia = await axios.put('http://ca-amd-b1.phosting.com.br:10174/noticia/postar', {
+        const postarNoticia = await axios.put('https://landhabbo.vps-kinghost.net:3443/noticia/postar', {
             id: noticia.id,
         })
         window.location.reload()
     }
-
-
 
     if (noticia === '' || !cargo) {
         return (<Loading />)
